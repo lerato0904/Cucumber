@@ -26,7 +26,9 @@ public class StepDefinition extends BrowserDriver {
 
     @Given("Automation exercise webpage is launched")
     public void launchwebpage(){
-        driver.get("https://automationexercise.com/");
+        driver.manage().window().maximize();
+        //driver.get("https://automationexercise.com/");
+        Assert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com");
     }
 
     @When("User clicks on the SignupLogin link")
