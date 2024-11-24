@@ -8,9 +8,9 @@ public class BrowserDriver {
 
     public BrowserDriver()
     {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+ "/src/test/resources/driver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+ "/src/test/resources/drivers/chromedriver.exe");
         driver = new ChromeDriver();
-        driver.get("www.automationexercise.com");
+        driver.get("https://automationexercise.com/");
     }
 
     public void Close()
