@@ -8,11 +8,10 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utility.BrowserDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
 
-import java.time.Duration;
+
 
 public class StepDefinition extends BrowserDriver {
     public Faker faker;
@@ -27,8 +26,8 @@ public class StepDefinition extends BrowserDriver {
     @Given("Automation exercise webpage is launched")
     public void launchwebpage(){
         driver.manage().window().maximize();
-        //driver.get("https://automationexercise.com/");
-        Assert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com");
+        driver.getCurrentUrl();
+        Assert.assertEquals("https://automationexercise.com/", driver.getCurrentUrl());
     }
 
     @When("User clicks on the SignupLogin link")
@@ -161,5 +160,29 @@ public class StepDefinition extends BrowserDriver {
         driver.findElement(By.id("months")).sendKeys(String.valueOf(month));  // Month field (convert to String if necessary)
         driver.findElement(By.id("days")).sendKeys(String.valueOf(day));  // Day field (convert to String if necessary)
 
+    }
+
+    @When("Using a relative locator: User clicks on the SignupLogin link")
+    public void usingARelativeLocatorUserClicksOnTheSignupLoginLink() {
+        var cart = driver.findElement(By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[3]/a"));
+        var testCases = driver.findElement(By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[5]/a"));
+        WebElement complexLocator = driver.findElement(
+                RelativeLocator.with(By.id("a"))
+                        .toRightOf(cart)
+                        .toLeftOf(testCases)
+        );
+        complexLocator.click();
+    }
+
+    @And("Using relative locators : User enters an email address")
+    public void usingRelativeLocatorsUserEntersAnEmailAddress() {
+        var name = driver.findElement(By.xpath("//*[@id=\"form\"]/div/div/div[3]/div/form/input[2]"));
+        var signupButton = driver.findElement(By.xpath("//*[@id=\"form\"]/div/div/div[3]/div/form/button"));
+        WebElement complexLocator = driver.findElement(
+                RelativeLocator.with(By.tagName("input"))
+                        .below(name)
+                        .above(signupButton)
+        );
+        complexLocator.sendKeys(email);
     }
 }
